@@ -1,6 +1,6 @@
-# DungeonExplorer
+# Dungeon Explorer
 
-**DungeonExplorer** is a 2D dungeon-crawling adventure game where players navigate procedurally generated dungeons, defeat enemies, collect loot, and save their progress. The game incorporates user authentication and cloud-based data storage, allowing players to track achievements and compete on leaderboards.
+**Dungeon Explorer** is a 2D dungeon-crawling adventure game where players navigate procedurally generated dungeons, defeat enemies, collect loot, and save their progress. The game incorporates user authentication and cloud-based data storage, allowing players to track achievements and compete on leaderboards.
 
 ## Features
 - Procedurally generated dungeons for unique gameplay experiences.

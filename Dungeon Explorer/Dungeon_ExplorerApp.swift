@@ -27,6 +27,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct Dungeon_ExplorerApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @State private var isLoggedIn = false
     
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
@@ -43,8 +44,15 @@ struct Dungeon_ExplorerApp: App {
 
     var body: some Scene {
         WindowGroup {
-            LoginView()
+            if isLoggedIn {
+                ContentView(onLogout: {
+                    isLoggedIn = false // Set to false on logout
+                })
+            } else {
+                LoginView(onLogin: {
+                    isLoggedIn = true // Set to true on login
+                })
+            }
         }
-        .modelContainer(sharedModelContainer)
     }
 }

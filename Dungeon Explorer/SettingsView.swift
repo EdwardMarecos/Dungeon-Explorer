@@ -1,5 +1,5 @@
 //
-//  LoginView.swift
+//  SettingsView.swift
 //  Dungeon Explorer
 //
 //  Created by Edward Marecos on 12/23/24.
@@ -7,24 +7,24 @@
 
 import SwiftUI
 
-struct LoginView: View {
-    var onLogin: () -> Void
+struct SettingsView: View {
+    var onLogout: () -> Void
 
     var body: some View {
         VStack {
-            Text("Dungeon Explorer")
+            Text("Settings")
                 .font(.largeTitle)
                 .bold()
                 .padding(.bottom, 40)
 
             Button(action: {
-                onLogin() // Call the login closure
+                onLogout() // Call the logout closure
             }) {
-                Text("Log In")
+                Text("Log Out")
                     .bold()
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Color.blue)
+                    .background(Color.red)
                     .foregroundColor(.white)
                     .cornerRadius(8)
             }
@@ -33,3 +33,4 @@ struct LoginView: View {
         .padding()
     }
 }
+

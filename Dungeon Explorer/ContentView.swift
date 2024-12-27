@@ -13,7 +13,7 @@ struct ContentView: View {
 
     var body: some View {
         TabView {
-                    DungeonStartView()
+                    DungeonView()
                         .tabItem {
                             Label("Dungeon", systemImage: "flame")
                         }

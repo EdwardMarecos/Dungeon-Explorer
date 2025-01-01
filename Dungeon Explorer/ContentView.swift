@@ -13,21 +13,25 @@ struct ContentView: View {
 
     var body: some View {
         TabView {
-                    DungeonView()
-                        .tabItem {
-                            Label("Dungeon", systemImage: "flame")
-                        }
-
-                    InventoryView()
-                        .tabItem {
-                            Label("Inventory", systemImage: "bag")
-                        }
-
-                    SettingsView(onLogout: onLogout)
-                        .tabItem {
-                            Label("Settings", systemImage: "gear")
-                        }
+//            DungeonGridView(dungeon: generateDungeonGrid())
+//                .tabItem {
+//                    Label("Grid", systemImage: "grid")
+//                }
+            DungeonView()
+                .tabItem {
+                    Label("Dungeon", systemImage: "flame")
                 }
+
+            InventoryView()
+                .tabItem {
+                    Label("Inventory", systemImage: "bag")
+                }
+
+            SettingsView(onLogout: onLogout)
+                .tabItem {
+                    Label("Settings", systemImage: "gear")
+                }
+        }
     }
 }
 //        NavigationView {

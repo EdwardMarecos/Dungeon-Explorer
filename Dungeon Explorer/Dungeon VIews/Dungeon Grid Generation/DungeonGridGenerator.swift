@@ -117,59 +117,68 @@ func createPath(
 
     // Pathfinding loop
     while current != end {
-        // Mark current cell as part of the path
-        dungeon.setTileType(at: current.0, y: current.1, to: .pathway)
         
-        // Gather all potential moves that go “closer” in x/y
-        // AND remain inside (or are the `end`) so we don't touch edges.
+        // Only overwrite if it's not the start or end tile.
+        // This ensures .start and .end keep their special colors.
+        let currentType = dungeon.grid[current.0][current.1].type
+        if currentType != .start && currentType != .end {
+            dungeon.setTileType(at: current.0, y: current.1, to: .pathway)
+        }
+        
+        // Figure out which moves would go closer to end, staying within interior
         var possibleMoves: [(Int, Int)] = []
         
-        // Move right if current.x < end.x
+        // Move right if x < end.x
         if current.0 < end.0 {
-            let newPos = (current.0 + 1, current.1)
-            if isInInteriorOrEnd(newPos, end: end, width: width, height: height) {
-                possibleMoves.append(newPos)
+            let nextPos = (current.0 + 1, current.1)
+            if isInInteriorOrEnd(nextPos, end: end, width: width, height: height) {
+                possibleMoves.append(nextPos)
             }
         }
-        
-        // Move left if current.x > end.x
+        // Move left if x > end.x
         if current.0 > end.0 {
-            let newPos = (current.0 - 1, current.1)
-            if isInInteriorOrEnd(newPos, end: end, width: width, height: height) {
-                possibleMoves.append(newPos)
+            let nextPos = (current.0 - 1, current.1)
+            if isInInteriorOrEnd(nextPos, end: end, width: width, height: height) {
+                possibleMoves.append(nextPos)
             }
         }
-        
-        // Move down if current.y < end.y
+        // Move down if y < end.y
         if current.1 < end.1 {
-            let newPos = (current.0, current.1 + 1)
-            if isInInteriorOrEnd(newPos, end: end, width: width, height: height) {
-                possibleMoves.append(newPos)
+            let nextPos = (current.0, current.1 + 1)
+            if isInInteriorOrEnd(nextPos, end: end, width: width, height: height) {
+                possibleMoves.append(nextPos)
             }
         }
-        
-        // Move up if current.y > end.y
+        // Move up if y > end.y
         if current.1 > end.1 {
-            let newPos = (current.0, current.1 - 1)
-            if isInInteriorOrEnd(newPos, end: end, width: width, height: height) {
-                possibleMoves.append(newPos)
+            let nextPos = (current.0, current.1 - 1)
+            if isInInteriorOrEnd(nextPos, end: end, width: width, height: height) {
+                possibleMoves.append(nextPos)
             }
         }
         
-        // Randomly shuffle for variety
+        // Shuffle for variety
         possibleMoves.shuffle()
         
-        // If no valid move is found, we give up (dead-end)
-        guard let next = possibleMoves.first else {
+        // If no valid move, stop
+        guard let nextMove = possibleMoves.first else {
             break
         }
         
-        current = next
+        // If our next move *is* the end, just break so we don't overwrite it
+        if nextMove == end {
+            break
+        }
+        
+        // Otherwise, take that step
+        current = nextMove
     }
     
-    // Finally, ensure the end tile is set as pathway
-    dungeon.setTileType(at: end.0, y: end.1, to: .pathway)
+    // Finally, ensure start & end remain labeled properly
+    dungeon.setTileType(at: start.0, y: start.1, to: .start)
+    dungeon.setTileType(at: end.0, y: end.1, to: .end)
 }
+
 
 // Helper to allow “end” coordinate on the edge, but keep all intermediate steps strictly inside.
 private func isInInteriorOrEnd(_ pos: (Int, Int),
